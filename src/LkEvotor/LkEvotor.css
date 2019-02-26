@@ -1,0 +1,14 @@
+.LkEvotor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+}
+
+.Feedbacks-wrapper {
+    width: 70%;
+}
+
+.CommonRating-wrapper {
+    width: 30%;
+}
