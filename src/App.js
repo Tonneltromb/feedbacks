@@ -3,6 +3,7 @@ import {Switch, Route} from "react-router-dom";
 
 import './App.css';
 import LkEvotor from "./LkEvotor/LkEvotor";
+import FeedbackPage from "./FeedBackForm/FeedbackPage";
 
 class App extends Component {
   render() {
@@ -10,6 +11,7 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route path="/lkEvotor" component={LkEvotor}/>
+          <Route path="/feedback" component={FeedbackPage}/>
         </Switch>
       </div>
     );
