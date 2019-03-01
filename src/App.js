@@ -3,7 +3,7 @@ import {Switch, Route} from "react-router-dom";
 
 import './App.css';
 import LkEvotor from "./LkEvotor/LkEvotor";
-import FeedbackPage from "./FeedBackForm/FeedbackPage";
+import FeedbackPage from "./FeedbackForm/FeedbackForm";
 
 class App extends Component {
   render() {

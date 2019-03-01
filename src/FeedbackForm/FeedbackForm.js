@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import axios from 'axios';
 
+import './FeedbackForm.css';
 import * as constants from '../common/constants';
 import Spinner from "../common/components/Spinner/Spinner";
 import FeedbackFormElement from "./FeedbackFormElement/FeedbackFormElement";
@@ -29,13 +30,16 @@ class FeedbackForm extends Component {
         let additionalComponent = null;
         if (this.state.loading) additionalComponent = <Spinner />;
         return (
-            <div>
+            <div className="FeedbackForm">
                 {additionalComponent}
-                {this.state.questions.map((question) => {
-                    return <FeedbackFormElement
-                        key={question.id}
-                        questionObject={question}/>
-                })}
+                <h1>Оставьте свой отзыв</h1>
+                <div className='FeedbackForm-questions'>
+                    {this.state.questions.map((question) => {
+                        return <FeedbackFormElement
+                            key={question.id}
+                            questionObject={question}/>
+                    })}
+                </div>
             </div>
         );
     }

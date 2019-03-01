@@ -1,9 +1,14 @@
 body {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
-div {
-  overflow: hidden;
-  box-sizing: border-box;
+div, h1, textarea {
+    color: #808080;
+}
+
+div, textarea {
+    overflow: hidden;
+    box-sizing: border-box;
+    outline: none;
 }
