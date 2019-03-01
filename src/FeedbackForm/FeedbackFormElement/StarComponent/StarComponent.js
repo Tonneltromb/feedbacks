@@ -24,11 +24,15 @@ class StarComponent extends Component {
 
     render() {
         return (
-            <div className="StarComponent">
+            <div
+                className="StarComponent feedback-form-input"
+                data-field-id={this.props.questionId}
+                data-field-value={this.state.value}
+            >
                 {this.getTitleElement()}
                 <div className="StarComponent-rating-component-wrapper">
                     <StarRatingComponent
-                        name={this.props.fieldName}
+                        name={`star-component-${this.props.questionId}`}
                         starCount={5}
                         value={this.state.value}
                         onStarClick={(nextValue, prevValue, name) => {
@@ -50,7 +54,7 @@ class StarComponent extends Component {
 }
 
 StarComponent.propTypes = {
-    fieldName: PropTypes.string.isRequired,
+    questionId: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired
 };
 

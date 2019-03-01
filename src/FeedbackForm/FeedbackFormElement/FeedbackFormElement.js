@@ -13,7 +13,7 @@ class FeedbackFormElement extends Component {
             case AnswerType.STAR: {
                 renderedComponent =
                     <StarComponent
-                        fieldName={this.props.questionObject.questionName}
+                        questionId={this.props.questionObject.id}
                         title={this.props.questionObject.questionTitle} />;
                 break;
             }
@@ -21,7 +21,7 @@ class FeedbackFormElement extends Component {
                 renderedComponent =
                     <TextAreaComponent
                         showTitle={!this.props.questionObject.questionName === 'main_comment'}
-                        fieldName={this.props.questionObject.questionName}
+                        questionId={this.props.questionObject.id}
                         title={this.props.questionObject.questionTitle} />;
                     break;
             }
