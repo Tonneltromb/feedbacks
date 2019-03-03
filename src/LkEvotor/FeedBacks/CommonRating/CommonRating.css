@@ -2,3 +2,7 @@
     width: 100%;
     height: 100%;
 }
+.CommonRating-star-component {
+    width: 100%;
+    font-size: 4em;
+}

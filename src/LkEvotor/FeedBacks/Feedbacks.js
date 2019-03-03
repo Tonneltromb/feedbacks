@@ -3,31 +3,41 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import './Feedbacks.css';
+import * as constants from '../../common/constants';
 import FeedbackList from "./FeedBackList/FeedbackList";
+import Spinner from "../../common/components/Spinner/Spinner";
 
 class Feedbacks extends Component {
     state = {
-      feedbacks: ['1', '2']
+        feedbacks: [],
+        loading: false
     };
 
-    getUsers = () => {
-        axios.get('http://localhost:4000/users')
-            .then(resp => {
-                console.log(resp);
+    componentDidMount() {
+        this.setState({loading: true});
+        axios.get(constants.GET_USER_FEEDBACKS_URL, {
+            params: {
+                userToken: '1234'
+            }
+        })
+            .then((response) => {
+                const array = response.data.array.slice();
+                this.setState({feedbacks: array, loading: false});
             })
-            .catch(err => {
-                console.error(err);
-                this.setState({loading: false});
-            });
-    };
+            .catch(error => console.log('Feedbacks error', error));
+    }
 
     render() {
+        let additionalComponent = null;
+        if (this.state.loading) additionalComponent = <Spinner/>;
         return (
-            <div className='Feedbacks'>
-                <h2>Полученные отзывы: {this.state.feedbacks.length}</h2>
-                <button onClick={this.getUsers}>Get users</button>
-                {/*<FeedbackList feedbacks={this.state.feedbacks}/>*/}
-            </div>
+            <React.Fragment>
+                {additionalComponent}
+                <div className='Feedbacks'>
+                    <h2>Полученные отзывы: {this.state.feedbacks.length}</h2>
+                    <FeedbackList feedbacks={this.state.feedbacks}/>
+                </div>
+            </React.Fragment>
         );
     }
 }

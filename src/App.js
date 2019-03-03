@@ -10,7 +10,8 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route path="/lkEvotor" component={LkEvotor}/>
+          {/*<Route path="/lkEvotor" component={LkEvotor}/>*/}
+          <Route path="/" exact component={LkEvotor}/>
           <Route path="/feedback" component={FeedbackPage}/>
         </Switch>
       </div>

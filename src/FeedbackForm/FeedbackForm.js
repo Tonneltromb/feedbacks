@@ -18,7 +18,6 @@ class FeedbackForm extends Component {
     componentDidMount() {
         axios.get(constants.GET_QUESTIONS_URL)
             .then((response) => {
-                console.log('response', response.data);
                 const arr = response.data.slice();
                 this.setState({loading: false, questions: arr})
             })
@@ -44,7 +43,6 @@ class FeedbackForm extends Component {
             axios.post(constants.SEND_FEEDBACK_URL, sendObject)
                 .then((response) => {
                     this.setState({sending: false, sendSuccessful: true});
-                    console.log('response', response);
                 })
                 .catch((error) => {
                     console.log('error', error);
