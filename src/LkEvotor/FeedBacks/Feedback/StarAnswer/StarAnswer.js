@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import StarRatingComponent from 'react-star-rating-component';
+
 import './StarAnswer.css';
 
-import StarRatingComponent from 'react-star-rating-component';
 
 const StarAnswer = props => {
     return (
@@ -18,7 +19,7 @@ const StarAnswer = props => {
 };
 
 StarAnswer.propTypes = {
-
+    value: PropTypes.number.isRequired
 };
 
 export default StarAnswer;

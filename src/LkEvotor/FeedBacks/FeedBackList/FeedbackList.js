@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './FeedbackList.css';
-import Feedback from "../FeedBack/Feedback";
+import Feedback from "../Feedback/Feedback";
 
 const FeedbackList = (props) => {
     let feedbacks = <div>Отзывы не найдены</div>;

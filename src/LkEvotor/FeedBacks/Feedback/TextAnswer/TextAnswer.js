@@ -14,7 +14,7 @@ const TextAnswer = props => {
 };
 
 TextAnswer.propTypes = {
-
+    content: PropTypes.string.isRequired
 };
 
 export default TextAnswer;

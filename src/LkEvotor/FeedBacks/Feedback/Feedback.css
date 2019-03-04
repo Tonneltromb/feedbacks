@@ -16,5 +16,6 @@
 }
 
 .Feedback-create-time {
-
+    display: flex;
+    align-items: center;
 }
