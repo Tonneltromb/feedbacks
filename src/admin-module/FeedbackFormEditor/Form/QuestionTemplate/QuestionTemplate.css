@@ -1,0 +1,21 @@
+.QuestionTemplate {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.QuestionTemplate__input {
+    display: flex;
+    align-items: self-start;
+}
+
+.QuestionTemplate__input h3,
+.QuestionTemplate__input textarea {
+    width: 70%;
+    padding: 10px;
+    text-align: left;
+    word-break: break-all;
+    white-space: pre-wrap;
+}

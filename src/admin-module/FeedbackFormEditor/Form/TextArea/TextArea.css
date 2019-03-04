@@ -4,15 +4,8 @@
     justify-content: space-between;
 }
 
-.TextArea span {
-    font-size: 24px;
-    align-self: center;
-    color: red;
-}
-
-
 .TextArea textarea {
-    width: 50%;
+    width: 70%;
     font-size: 1.4em;
     padding: 8px;
     border-top: 2px solid #808080;

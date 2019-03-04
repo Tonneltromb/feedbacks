@@ -14,14 +14,14 @@ class Form extends Component {
     renderedInputs = () => {
         return this.props.questions.map((question) => {
             switch (question.questionType) {
-                case QuestionTypes.ADDITIONAL_RATING:
-                case QuestionTypes.DEFAULT_RATING : {
+                case QuestionTypes.ADDITIONAL_RATING_QUESTION:
+                case QuestionTypes.DEFAULT_RATING_QUESTION : {
                     return <RatingInput key={question.id} question={question}/>
                 }
                 case QuestionTypes.DEFAULT_COMMENT : {
                     return <TextArea key={question.id}/>
                 }
-                case QuestionTypes.TEXT_QUESTION : {
+                case QuestionTypes.ADDITIONAL_TEXT_QUESTION : {
                     return <TextArea key={question.id} title={question.questionTitle}/>
                 }
                 default:

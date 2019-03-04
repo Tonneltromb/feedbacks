@@ -12,7 +12,7 @@ import TextAnswer from "./TextAnswer/TextAnswer";
 const Feedback = (props) => {
     const answers = props.feedback.answers.map((answer) => {
         switch (answer['question_type']) {
-            case QuestionTypes.DEFAULT_RATING : {
+            case QuestionTypes.DEFAULT_RATING_QUESTION : {
                 const formattedDate = moment(props.feedback['create_at']).format('DD MMMM YYYY');
                 return (
                     <div key={answer.id} className="Feedback-main-rating">

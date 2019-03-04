@@ -5,7 +5,6 @@ import axios from "axios";
 import './FeedbackFormEditor.css';
 import * as constants from "../../common/constants";
 import Spinner from "../../FeedbackForm/FeedbackForm";
-import Form from "./Form/Form";
 import * as QuestionTypes from "../../common/QuestionTypes";
 import * as AnswerTypes from "../../common/answerTypes";
 import RatingInput from "./Form/RatingInput/RatingInput";
@@ -16,7 +15,7 @@ class FeedbackFormEditor extends Component {
 
     state = {
         questions: [],
-        addedQuestions: [],
+        additionalQuestions: [],
         loading: true,
     };
 
@@ -36,12 +35,12 @@ class FeedbackFormEditor extends Component {
         // todo: добавить предварительную сортировку по полю order
         return this.state.questions.map((question) => {
             switch (question.questionType) {
-                case QuestionTypes.ADDITIONAL_RATING: {
+                case QuestionTypes.ADDITIONAL_RATING_QUESTION: {
                     return <RatingInput
                         key={question.id}
                         question={question} />
                 }
-                case QuestionTypes.DEFAULT_RATING : {
+                case QuestionTypes.DEFAULT_RATING_QUESTION : {
                     return <RatingInput key={question.id} question={question}>
                         <span className='default-marker'>По умолчанию</span>
                     </RatingInput>
@@ -51,7 +50,7 @@ class FeedbackFormEditor extends Component {
                         <span className='default-marker'>По умолчанию</span>
                     </TextArea>
                 }
-                case QuestionTypes.TEXT_QUESTION : {
+                case QuestionTypes.ADDITIONAL_TEXT_QUESTION : {
                     return <TextArea key={question.id} title={question.questionTitle}/>
                 }
                 default:
@@ -61,50 +60,54 @@ class FeedbackFormEditor extends Component {
     };
 
     addQuestion = (type) => {
-        const addedQuestions = this.state.addedQuestions.slice();
+        const addedQuestions = this.state.additionalQuestions.map((oldQuestion) => {
+            return {...oldQuestion}
+        });
+        let answerType = '';
         switch (type) {
             case AnswerTypes.TEXT : {
-                addedQuestions.push({
-                    id: addedQuestions.length,
-                    title: '',
-                    isSaved: false,
-                    type: AnswerTypes.TEXT
-                });
-                this.setState({addedQuestions: addedQuestions});
+                answerType = AnswerTypes.TEXT;
                 break;
             }
             case AnswerTypes.STAR : {
-                addedQuestions.push({
-                    id: addedQuestions.length,
-                    title: '',
-                    isSaved: false,
-                    type: AnswerTypes.STAR
-                });
-                this.setState({addedQuestions: addedQuestions});
+                answerType = AnswerTypes.STAR;
                 break;
             }
-            default: break;
+            default: return;
         }
+        addedQuestions.push({
+            id: addedQuestions.length,
+            title: '',
+            isSaved: false,
+            type: answerType
+        });
+        this.setState({additionalQuestions: addedQuestions});
     };
 
-    saveLocally = (question) => {
-        console.log(question);
-        const _q = {...question};
-        const index = this.state.addedQuestions.findIndex((q) => q.id === _q.id);
-        const array = this.state.addedQuestions.slice();
-        array[index] = _q;
-        console.log(array);
-        this.setState({addedQuestions: array})
+    saveOrEditAdditionalQuestion = (newQuestion) => {
+        const array = this.state.additionalQuestions.map((oldQuestion) => {
+            if (oldQuestion.id === newQuestion.id) return newQuestion;
+            return {...oldQuestion}
+        });
+        this.setState({additionalQuestions: array})
     };
 
-    renderAddedQuestions = () => {
-        return this.state.addedQuestions.map((question, index, array) => {
+    deleteAdditionalQuestion = (id) => {
+        const array = this.state.additionalQuestions
+            .filter((q) => q.id !== id)
+            .map((oldQuestion) => { return {...oldQuestion} });
+        this.setState({additionalQuestions: array})
+    };
+
+    renderAdditionalQuestions = () => {
+        return this.state.additionalQuestions.map((question, index) => {
             return (
                 <QuestionTemplate
                     key={index}
                     question={question}
                     isSaved={question.isSaved}
-                    saveLocally={this.saveLocally} />
+                    onSaveOrEditHandler={this.saveOrEditAdditionalQuestion}
+                    onDeleteHandler={this.deleteAdditionalQuestion}/>
             );
         })
     };
@@ -119,7 +122,7 @@ class FeedbackFormEditor extends Component {
                     <div className="Form__questions">
                         {this.renderSavedQuestions()}
                     </div>
-                    {this.renderAddedQuestions()}
+                    {this.renderAdditionalQuestions()}
                     <div className="FeedbackFormEditor__edit-buttons">
                         <button
                             className="edit-button"

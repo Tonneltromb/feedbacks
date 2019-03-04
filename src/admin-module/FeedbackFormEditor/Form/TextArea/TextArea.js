@@ -4,7 +4,7 @@ import './TextArea.css';
 
 const TextArea = (props) => {
     const title = props.title
-        ? <div className="TextArea-title">{props.title}:</div>
+        ? <h3>{props.title}:</h3>
         : null;
     return (
         <div className='TextArea input-element'>
