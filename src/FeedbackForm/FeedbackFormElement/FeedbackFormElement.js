@@ -20,7 +20,7 @@ class FeedbackFormElement extends Component {
             case AnswerType.TEXT: {
                 renderedComponent =
                     <TextAreaComponent
-                        showTitle={!this.props.questionObject.questionType === 'main_comment'}
+                        showTitle={!this.props.questionObject.questionType === 'default_comment'}
                         questionId={this.props.questionObject.id}
                         title={this.props.questionObject.questionTitle} />;
                     break;

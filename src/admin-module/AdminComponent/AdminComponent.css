@@ -1,0 +1,16 @@
+.AdminComponent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.AdminComponent-navigation {
+    height: 100%;
+    width: 30%;
+    border-right: 1px solid black;
+}
+
+.AdminComponent-content {
+    height: 100%;
+    width: 70%;
+}

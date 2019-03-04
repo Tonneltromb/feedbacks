@@ -1,0 +1,76 @@
+.FeedbackFormEditor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.FeedbackFormEditor-bottom-buttons {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.FeedbackFormEditor-bottom-buttons button {
+    margin-right: 20px;
+    padding: 5px 25px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.FeedbackFormEditor-bottom-buttons button:hover {
+    box-shadow: 0 0 5px rgba(0,0,0,0.7)
+}
+
+.FeedbackFormEditor__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.Form__questions {
+    overflow: auto;
+    max-height: 95%;
+}
+
+.FeedbackFormEditor__edit-buttons {
+    min-height: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.edit-button {
+    background-color: #159bd5;
+    border: none;
+    font-size: 1em;
+    color: white;
+    border-radius: 5px;
+    padding: 15px 30px;
+    margin: 10px;
+}
+
+.edit-button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px #159bd5;
+    background-color: #157FBA;
+}
+
+.input-element {
+    width: 100%;
+    padding: 0 55px 0 35px;
+    margin-bottom: 10px;
+}
+
+.default-marker {
+    font-size: 24px;
+    align-self: center;
+    color: red;
+}

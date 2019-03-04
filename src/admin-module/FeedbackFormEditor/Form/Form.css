@@ -1,0 +1,41 @@
+.Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.Form__inputs {
+    overflow: auto;
+    max-height: 95%;
+}
+
+.Form__edit-buttons {
+    min-height: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.Form__edit-button {
+    background-color: #159bd5;
+    border: none;
+    font-size: 1em;
+    color: white;
+    border-radius: 5px;
+    padding: 15px 30px;
+    margin: 10px;
+}
+
+.Form__edit-button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px #159bd5;
+    background-color: #157FBA;
+}
+
+.input-element {
+    width: 100%;
+    padding: 0 55px 0 35px;
+    margin-bottom: 10px;
+}

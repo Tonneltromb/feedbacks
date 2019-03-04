@@ -1,4 +1,4 @@
-body {
+body, div, h1, h2, h3 {
     margin: 0;
     padding: 0;
 }
@@ -7,7 +7,7 @@ div, h1, textarea {
     color: #808080;
 }
 
-div, textarea {
+div, button, textarea {
     overflow: hidden;
     box-sizing: border-box;
     outline: none;
