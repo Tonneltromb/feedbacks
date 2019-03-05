@@ -28,7 +28,7 @@ class FeedbackForm extends Component {
     }
 
     sendFeedback = () => {
-        this.setState({sending: true});
+        this.setState({showSpinner: true});
         const sendObject = {storeUuid: '20170630-16F5-401C-805E-F71D266B7160'};
         let inputElements = document.getElementsByClassName('feedback-form-input');
         if (inputElements && inputElements.length) {
@@ -42,18 +42,18 @@ class FeedbackForm extends Component {
             sendObject['answers'] = answers;
             axios.post(constants.SEND_FEEDBACK_URL, sendObject)
                 .then((response) => {
-                    this.setState({sending: false, sendSuccessful: true});
+                    this.setState({showSpinner: false, sendSuccessful: true});
                 })
                 .catch((error) => {
                     console.log('error', error);
-                    this.setState({sending: false})
+                    this.setState({showSpinner: false})
                 });
         }
     };
 
     render() {
         let additionalComponent = null;
-        if (this.state.loading || this.state.sending) additionalComponent = <Spinner/>;
+        if (this.state.showSpinner) additionalComponent = <Spinner/>;
         return (
             <div className="FeedbackForm">
                 {additionalComponent}
