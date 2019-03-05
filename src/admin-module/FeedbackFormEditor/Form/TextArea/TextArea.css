@@ -1,6 +1,17 @@
 .TextArea {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.TextArea__question {
+    margin-bottom: 10px;
+}
+
+.TextArea__content {
+    width: 100%;
+    display: flex;
     justify-content: space-between;
 }
 

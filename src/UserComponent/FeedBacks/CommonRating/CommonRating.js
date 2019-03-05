@@ -13,14 +13,14 @@ class CommonRating extends Component {
     };
 
     componentDidMount() {
-        this.setState({loading: true});
+        this.setState({showSpinner: true});
         axios.get(constants.GET_USER_AVERAGE_RATING_URL, {
             params: {
                 userToken: '1234'
             }
         })
             .then((response) => {
-                this.setState({averageRating: response.data, loading: false});
+                this.setState({averageRating: response.data, showSpinner: false});
             })
             .catch(error => console.log('Feedbacks error', error));
     }

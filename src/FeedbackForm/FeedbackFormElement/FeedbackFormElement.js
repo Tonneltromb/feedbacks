@@ -2,27 +2,28 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import './FeedbackFormElement.css';
-import * as AnswerType from '../../common/answerTypes'
+import * as AnswerType from '../../common/AnswerType';
+import * as QuestionType from '../../common/QuestionType';
 import StarComponent from "./StarComponent/StarComponent";
 import TextAreaComponent from "./TextAreaComponent/TextAreaComponent";
 
 class FeedbackFormElement extends Component {
     render() {
         let renderedComponent = null;
-        switch (this.props.questionObject.answerType) {
+        switch (this.props.questionObject.answer_type) {
             case AnswerType.STAR: {
                 renderedComponent =
                     <StarComponent
                         questionId={this.props.questionObject.id}
-                        title={this.props.questionObject.questionTitle} />;
+                        title={this.props.questionObject.question_text} />;
                 break;
             }
             case AnswerType.TEXT: {
                 renderedComponent =
                     <TextAreaComponent
-                        showTitle={!this.props.questionObject.questionType === 'default_comment'}
+                        showTitle={!(this.props.questionObject.question_type === QuestionType.DEFAULT_COMMENT)}
                         questionId={this.props.questionObject.id}
-                        title={this.props.questionObject.questionTitle} />;
+                        title={this.props.questionObject.question_text} />;
                     break;
             }
             default:

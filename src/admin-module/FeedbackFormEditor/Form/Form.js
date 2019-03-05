@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './Form.css'
-import * as QuestionTypes from '../../../common/QuestionTypes';
+import * as QuestionType from '../../../common/QuestionType';
 import RatingInput from "./RatingInput/RatingInput";
 import TextArea from "./TextArea/TextArea";
 
@@ -13,16 +13,16 @@ class Form extends Component {
 
     renderedInputs = () => {
         return this.props.questions.map((question) => {
-            switch (question.questionType) {
-                case QuestionTypes.ADDITIONAL_RATING_QUESTION:
-                case QuestionTypes.DEFAULT_RATING_QUESTION : {
+            switch (question.question_type) {
+                case QuestionType.ADDITIONAL_STAR_RATING:
+                case QuestionType.DEFAULT_STAR_RATING : {
                     return <RatingInput key={question.id} question={question}/>
                 }
-                case QuestionTypes.DEFAULT_COMMENT : {
+                case QuestionType.DEFAULT_COMMENT : {
                     return <TextArea key={question.id}/>
                 }
-                case QuestionTypes.ADDITIONAL_TEXT_QUESTION : {
-                    return <TextArea key={question.id} title={question.questionTitle}/>
+                case QuestionType.ADDITIONAL_TEXT_QUESTION : {
+                    return <TextArea key={question.id} title={question.question_text}/>
                 }
                 default:
                     return null;

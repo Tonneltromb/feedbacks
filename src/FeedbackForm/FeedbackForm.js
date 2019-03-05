@@ -10,7 +10,7 @@ import FeedbackFormElement from "./FeedbackFormElement/FeedbackFormElement";
 class FeedbackForm extends Component {
     state = {
         questions: [],
-        loading: true,
+        showSpinner: true,
         sending: false,
         sendSuccessful: false
     };
@@ -19,11 +19,11 @@ class FeedbackForm extends Component {
         axios.get(constants.GET_QUESTIONS_URL)
             .then((response) => {
                 const arr = response.data.slice();
-                this.setState({loading: false, questions: arr})
+                this.setState({showSpinner: false, questions: arr})
             })
             .catch((error) => {
                 console.log('error', error);
-                this.setState({loading: false})
+                this.setState({showSpinner: false})
             });
     }
 

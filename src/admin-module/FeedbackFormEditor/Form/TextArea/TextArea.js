@@ -7,12 +7,16 @@ const TextArea = (props) => {
         ? <h3>{props.title}:</h3>
         : null;
     return (
-        <div className='TextArea input-element'>
-            {title}
+        <div className='TextArea'>
+            <div className='TextArea__question'>
+                {title}
+            </div>
+            <div className='TextArea__content'>
             <textarea
                 placeholder="Оставьте свой комментарий" disabled={true}>
             </textarea>
-            {props.children}
+                {props.children}
+            </div>
         </div>
     );
 };

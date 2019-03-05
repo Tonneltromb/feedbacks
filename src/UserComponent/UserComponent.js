@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 
 import Feedbacks from "./FeedBacks/Feedbacks";
 import CommonRating from "./FeedBacks/CommonRating/CommonRating";
-import './LkEvotor.css'
+import './UserComponent.css'
 
-class LkEvotor extends Component {
+class UserComponent extends Component {
     render() {
         return (
-            <div className="LkEvotor">
+            <div className="UserComponent">
                 <div className='Feedbacks-wrapper'>
                     <Feedbacks/>
                 </div>
@@ -19,4 +19,4 @@ class LkEvotor extends Component {
     }
 }
 
-export default LkEvotor;
+export default UserComponent;

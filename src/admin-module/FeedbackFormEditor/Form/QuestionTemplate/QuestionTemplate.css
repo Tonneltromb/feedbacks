@@ -14,7 +14,6 @@
 .QuestionTemplate__input h3,
 .QuestionTemplate__input textarea {
     width: 70%;
-    padding: 10px;
     text-align: left;
     word-break: break-all;
     white-space: pre-wrap;

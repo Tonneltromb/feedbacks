@@ -14,7 +14,7 @@ class Feedbacks extends Component {
     };
 
     componentDidMount() {
-        this.setState({loading: true});
+        this.setState({showSpinner: true});
         axios.get(constants.GET_USER_FEEDBACKS_URL, {
             params: {
                 userToken: '1234'
@@ -22,7 +22,7 @@ class Feedbacks extends Component {
         })
             .then((response) => {
                 const array = response.data.array.slice();
-                this.setState({feedbacks: array, loading: false});
+                this.setState({feedbacks: array, showSpinner: false});
             })
             .catch(error => console.log('Feedbacks error', error));
     }

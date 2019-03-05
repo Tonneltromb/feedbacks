@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import * as AnswerTypes from "../../../../common/answerTypes";
+import * as AnswerType from "../../../../common/AnswerType";
 
 import './QuestionTemplate.css';
 import TextArea from "../TextArea/TextArea";
@@ -8,19 +8,19 @@ import RatingInput from "../RatingInput/RatingInput";
 
 class QuestionTemplate extends Component {
     state = {
-        title: ''
+        questionText: ''
     };
 
     componentDidMount() {
-        if (this.props.question.title !== '') {
-            this.setState({title: this.props.question.title})
+        if (this.props.question.question_text !== '') {
+            this.setState({questionText: this.props.question.question_text})
         }
     }
 
     saveQuestion = () => {
         const savedQuestion = {...this.props.question};
         savedQuestion.isSaved = true;
-        savedQuestion.title = this.state.title;
+        savedQuestion.question_text = this.state.questionText;
         this.props.onSaveOrEditHandler(savedQuestion);
     };
 
@@ -38,7 +38,7 @@ class QuestionTemplate extends Component {
         return (
             <div>
                 <button onClick={this.saveQuestion} title="Подтвердить изменения">&#10003;</button>
-                <button onClick={this.editQuestion} title="Редактировать">&#128393;</button>
+                <button onClick={this.editQuestion} title="Редактировать">&#9998;</button>
                 <button onClick={this.deleteQuestion} title="Удалить">&#10007;</button>
             </div>
         );
@@ -46,10 +46,10 @@ class QuestionTemplate extends Component {
 
     renderQuestion = (type) => {
         switch (type) {
-            case AnswerTypes.TEXT : {
+            case AnswerType.TEXT : {
                 return <TextArea>{this.getManageButtons()}</TextArea>
             }
-            case AnswerTypes.STAR : {
+            case AnswerType.STAR : {
                 return <RatingInput>{this.getManageButtons()}</RatingInput>
             }
             default:
@@ -57,25 +57,24 @@ class QuestionTemplate extends Component {
         }
     };
 
-    onTitleInputChangeHandler = (event) => {
-        this.setState({title: event.target.value});
+    onQuestionTextInputChangeHandler = (event) => {
+        this.setState({questionText: event.target.value});
     };
 
-    renderTitle = () => {
+    renderQuestionText = () => {
         return !this.props.isSaved
             ? (<textarea
                 placeholder='Заголовок вопроса*'
-                value={this.state.title}
-                onChange={this.onTitleInputChangeHandler} />)
-            : <h3>{this.props.question.title}</h3>;
+                value={this.state.questionText}
+                onChange={this.onQuestionTextInputChangeHandler} />)
+            : <h3>{this.props.question.question_text}</h3>;
     };
 
     render() {
-        const title = this.renderTitle();
-        const question = this.renderQuestion(this.props.question.type);
+        const question = this.renderQuestion(this.props.question.answer_type );
         return (
-            <div className="QuestionTemplate">
-                <div className='QuestionTemplate__input input-element'>{this.renderTitle()}</div>
+            <div className="QuestionTemplate input-element">
+                <div className='QuestionTemplate__input'>{this.renderQuestionText()}</div>
                 {question}
             </div>
         );
