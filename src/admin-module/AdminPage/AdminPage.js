@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 
 import {Route} from "react-router-dom";
 
-import './AdminComponent.css';
-import FeedbackFormEditor from "../FeedbackFormEditor/FeedbackFormEditor";
-import FeedbackList from "../FeedbackList/FeedbackList";
+import './AdminPage.css';
+import FormEditor from "./FormEditor/FormEditor";
+import FeedbackList from "./FeedbackList/FeedbackList";
 
-class AdminComponent extends Component {
+class AdminPage extends Component {
     render() {
         return (
             <div className='AdminComponent'>
@@ -23,7 +23,7 @@ class AdminComponent extends Component {
                     </div>
                 </div>
                 <div className='AdminComponent-content'>
-                    <Route path={`${this.props.match.url}/editFeedbackForm`} component={FeedbackFormEditor}/>
+                    <Route path={`${this.props.match.url}/editFeedbackForm`} component={FormEditor}/>
                     <Route path={`${this.props.match.url}/showFeedbacks`} component={FeedbackList}/>
                 </div>
             </div>
@@ -31,4 +31,4 @@ class AdminComponent extends Component {
     }
 }
 
-export default AdminComponent;
+export default AdminPage;

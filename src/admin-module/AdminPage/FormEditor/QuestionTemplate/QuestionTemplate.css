@@ -18,6 +18,14 @@
     border-radius: 5px;
 }
 
+.manage-button {
+    margin: 5px;
+    padding: 10px;
+    height: 40px;
+    min-width: 60px;
+    border-radius: 5px;
+}
+
 .edit-manage-button {
     color: white;
     font-weight: bold;
@@ -41,14 +49,14 @@
     box-shadow: 0 0 5px 1px #454545;
 }
 
-.delete-manage-button {
+.manage-button-delete {
     color: white;
     font-weight: bold;
     background-color: firebrick;
     border: 1px solid firebrick;
 }
 
-.delete-manage-button:hover {
+.manage-button-delete:hover {
     background-color: crimson;
     box-shadow: 0 0 5px 1px #454545;
 }

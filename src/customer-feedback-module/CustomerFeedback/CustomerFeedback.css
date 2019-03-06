@@ -13,7 +13,10 @@
 }
 
 .CustomerFeedback__question {
-    margin: 20px 0;
+    margin: 10px 0;
+    border: 1px solid gray;
+    box-shadow: 0 0 2px 1px grey;
+    padding: 10px 20px;
 }
 
 .CustomerFeedback__send-button {

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import './Feedbacks.css';
-import * as constants from '../../../common-module/constants';
+import * as constants from '../../../common-module/constants/constants';
 import FeedbackList from "./FeedBackList/FeedbackList";
 import Spinner from "../../../common-module/components/Spinner/Spinner";
 //todo: количество отзывов присылать отдельно(по-любому, будет пагинация)

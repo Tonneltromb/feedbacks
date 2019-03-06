@@ -3,11 +3,11 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import './CustomerFeedback.css';
-import * as constants from '../../common-module/constants';
-import * as QuestionType from '../../common-module/QuestionType';
+import * as constants from '../../common-module/constants/constants';
+import * as QuestionType from '../../common-module/constants/QuestionType';
 import Spinner from "../../common-module/components/Spinner/Spinner";
-import Rating from "./Questions/Rating/Rating";
-import TextArea from "./Questions/TextArea/TextArea";
+import StarRatingWrapper from './StarRatingWrapper/StarRatingWrapper';
+import TextAreaWrapper from './TextAreaWrapper/TextAreaWrapper';
 
 class CustomerFeedback extends Component {
     state = {
@@ -32,20 +32,23 @@ class CustomerFeedback extends Component {
     renderQuestion = (question) => {
         switch (question.question_type) {
             case QuestionType.DEFAULT_STAR_RATING: {
-                return <Rating questionId={question.id} title={question.question_text}/>;
+                return <StarRatingWrapper key={question.id} question={question} />;
             }
             case QuestionType.DEFAULT_COMMENT: {
-                return <TextArea questionId={question.id}/>;
+                return <TextAreaWrapper
+                    key={question.id}
+                    questionId={question.id}
+                    textareaPlaceholder={`Оставьте свой комментарий`} />;
             }
             case QuestionType.ADDITIONAL_STAR_RATING : {
-                return <Rating
-                    questionId={question.id}
-                    title={question.question_text}/>;
+                return <StarRatingWrapper key={question.id} question={question} />;
             }
             case QuestionType.ADDITIONAL_TEXT_QUESTION : {
-                return <TextArea
+                return <TextAreaWrapper
+                    key={question.id}
                     questionId={question.id}
-                    title={question.question_text} />;
+                    questionText={question.question_text}
+                    textareaPlaceholder={`Оставьте свой комментарий`} />;
             }
             default:
                 return null;
@@ -54,7 +57,7 @@ class CustomerFeedback extends Component {
 
     renderQuestions = () => {
         const defaultQuestions = (
-            <div className='CustomerFeedback__question'>
+            <div key={0} className='CustomerFeedback__question'>
                 {
                     this.state.questions
                         .filter((question) => QuestionType.isDefault(question.question_type))
@@ -65,7 +68,7 @@ class CustomerFeedback extends Component {
         const addedQuestions = this.state.questions
             .filter((question) => !QuestionType.isDefault(question.question_type))
             .map((question) => (
-                <div className='CustomerFeedback__question'>
+                <div key={question.id} className='CustomerFeedback__question'>
                     {this.renderQuestion(question)}
                 </div>
             ));

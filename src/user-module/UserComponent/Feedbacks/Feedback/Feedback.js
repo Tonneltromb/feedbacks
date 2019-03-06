@@ -5,7 +5,7 @@ import moment from 'moment';
 import 'moment/locale/ru';
 
 import './Feedback.css';
-import * as QuestionType from '../../../../common-module/QuestionType';
+import * as QuestionType from '../../../../common-module/constants/QuestionType';
 import StarAnswer from './StarAnswer/StarAnswer';
 import TextAnswer from './TextAnswer/TextAnswer';
 

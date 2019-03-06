@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
 import PropTypes from 'prop-types';
-import * as AnswerType from "../../../../common-module/AnswerType";
 
 import './QuestionTemplate.css';
-import TextArea from "../TextArea/TextArea";
-import RatingInput from "../RatingInput/RatingInput";
+import * as AnswerType from "../../../../common-module/constants/AnswerType";
+import TextAreaWrapper from '../TextAreaWrapper/TextAreaWrapper';
+import StarRatingWrapper from '../StarRatingWrapper/StarRatingWrapper';
 
 class QuestionTemplate extends Component {
     state = {
@@ -30,25 +30,24 @@ class QuestionTemplate extends Component {
         }
 
     };
-
     deleteQuestion = () => {
         this.props.onDeleteQuestionHandler(this.props.question.id);
     };
-
     getManageButtons = () => {
-        const className = this.props.question.isEditedNow ? 'save-manage-button' : 'edit-manage-button' ;
+        const className = this.props.question.isEditedNow ? 'save-manage-button' : 'edit-manage-button';
         const title = this.props.question.isEditedNow ? 'Подтвердить изменения' : 'Редактировать';
-        const innerText = this.props.question.isEditedNow ? 'СОХРАНИТЬ' : 'РЕДАКТИРОВАТЬ' ;
+        const innerText = this.props.question.isEditedNow ? 'СОХРАНИТЬ' : 'РЕДАКТИРОВАТЬ';
         return (
             <React.Fragment>
                 <button
-                    className={className}
+                    className={`manage-button ${className}`}
                     onClick={this.saveOrEditQuestion}
                     title={title}>{innerText}</button>
                 <button
-                    className='delete-manage-button'
+                    className='manage-button manage-button-delete'
                     onClick={this.deleteQuestion}
-                    title="Удалить">УДАЛИТЬ</button>
+                    title="Удалить">УДАЛИТЬ
+                </button>
             </React.Fragment>
         );
     };
@@ -56,10 +55,18 @@ class QuestionTemplate extends Component {
     renderQuestion = (type) => {
         switch (type) {
             case AnswerType.TEXT : {
-                return <TextArea questionText={this.state.questionText}>{this.getManageButtons()}</TextArea>
+                return (
+                    <TextAreaWrapper questionText={this.state.questionText}>
+                        {this.getManageButtons()}
+                    </TextAreaWrapper>
+                );
             }
             case AnswerType.STAR : {
-                return <RatingInput questionText={this.state.questionText}>{this.getManageButtons()}</RatingInput>
+                return (
+                    <StarRatingWrapper questionId={this.props.question.id} questionText={this.state.questionText}>
+                        {this.getManageButtons()}
+                    </StarRatingWrapper>
+                );
             }
             default:
                 return null;

@@ -1,0 +1,10 @@
+.TextAreaWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.TextArea-component-wrapper {
+    width: 70%;
+}

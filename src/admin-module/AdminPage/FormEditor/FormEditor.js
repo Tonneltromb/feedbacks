@@ -3,17 +3,17 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
 
-import './FeedbackFormEditor.css';
-import * as constants from "../../common-module/constants";
-import Spinner from "../../common-module/components/Spinner/Spinner";
-import * as QuestionType from "../../common-module/QuestionType";
-import * as AnswerType from "../../common-module/AnswerType";
-import * as PropTypeConstants from "../../common-module/PropTypeConstants";
-import RatingInput from "./Form/RatingInput/RatingInput";
-import TextArea from "./Form/TextArea/TextArea";
-import QuestionTemplate from "./Form/QuestionTemplate/QuestionTemplate";
+import './FormEditor.css';
+import * as constants from "../../../common-module/constants/constants";
+import * as QuestionType from "../../../common-module/constants/QuestionType";
+import * as AnswerType from "../../../common-module/constants/AnswerType";
+import * as PropTypeConstants from "../../../common-module/constants/PropTypeConstants";
+import Spinner from "../../../common-module/components/Spinner/Spinner";
+import QuestionTemplate from "./QuestionTemplate/QuestionTemplate";
+import StarRatingWrapper from './StarRatingWrapper/StarRatingWrapper';
+import TextAreaWrapper from './TextAreaWrapper/TextAreaWrapper';
 
-class FeedbackFormEditor extends Component {
+class FormEditor extends Component {
 
     state = {
         questions: [],
@@ -26,11 +26,10 @@ class FeedbackFormEditor extends Component {
     componentDidMount() {
         this.loadQuestions();
     }
-
     loadQuestions = () => {
         axios.get(constants.GET_QUESTIONS_URL)
             .then((response) => {
-                const arr = response.data.slice();
+                const arr = response.data.slice().sort((first, second) => first.order_num - second.order_num);
                 this.setState({showSpinner: false, questions: arr})
             })
             .catch((error) => {
@@ -38,55 +37,64 @@ class FeedbackFormEditor extends Component {
                 this.setState({showSpinner: false})
             });
     };
-
-    renderSavedQuestions = () => {
-        return this.state.questions
-            .sort((first, second) => first.order_num - second.order_num)
-            .map((question) => {
-        let renderComponent = null;
-            switch (question.question_type) {
-                case QuestionType.DEFAULT_STAR_RATING : {
-                    renderComponent = (
-                        <RatingInput questionText={question.question_text}>
-                            <span className='default-question-marker'>По умолчанию</span>
-                        </RatingInput>
-                    );
-                    break;
-                }
-                case QuestionType.DEFAULT_COMMENT : {
-                    renderComponent = (
-                        <TextArea>
-                            <span className='default-question-marker'>По умолчанию</span>
-                        </TextArea>
-                    );
-                    break;
-                }
-                case QuestionType.ADDITIONAL_STAR_RATING: {
-                    renderComponent = (
-                        <RatingInput questionText={question.question_text}>
-                                <button
-                                    className='delete-manage-button'
-                                    onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>УДАЛИТЬ</button>
-                        </RatingInput>
-                    );
-                    break;
-                }
-                case QuestionType.ADDITIONAL_TEXT_QUESTION : {
-                    renderComponent = (
-                        <TextArea questionText={question.question_text}>
-                                <button
-                                    className='delete-manage-button'
-                                    onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>УДАЛИТЬ</button>
-                        </TextArea>
-                    );
-                    break;
-                }
-                default: break;
+    getWrappedQuestion = (question) => {
+        switch (question.question_type) {
+            case QuestionType.DEFAULT_STAR_RATING : {
+                return (
+                    <StarRatingWrapper key={question.id} questionId={question.id} questionText={question.question_text}>
+                        <span className='default-question-marker'>По умолчанию</span>
+                    </StarRatingWrapper>
+                );
             }
-            return (<div key={question.id} className='question-element'>{renderComponent}</div>);
-        });
+            case QuestionType.DEFAULT_COMMENT : {
+                return (
+                    <TextAreaWrapper key={question.id} textareaPlaceholder={`Оставьте свой комментарий`}>
+                        <span className='default-question-marker'>По умолчанию</span>
+                    </TextAreaWrapper>
+                );
+            }
+            case QuestionType.ADDITIONAL_STAR_RATING: {
+                return (
+                    <StarRatingWrapper key={question.id} questionId={question.id} questionText={question.question_text}>
+                        <button
+                            className='manage-button manage-button-delete'
+                            onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>УДАЛИТЬ
+                        </button>
+                    </StarRatingWrapper>
+                );
+            }
+            case QuestionType.ADDITIONAL_TEXT_QUESTION : {
+                return (
+                    <TextAreaWrapper key={question.id} questionText={question.question_text}>
+                        <button
+                            className='manage-button manage-button-delete'
+                            onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>УДАЛИТЬ
+                        </button>
+                    </TextAreaWrapper>
+                );
+            }
+            default: return null;
+        }
     };
-
+    renderSavedQuestions = () => {
+        const defaultQuestions = (
+            <div key={0} className='question-element'>
+                {
+                    this.state.questions
+                        .filter((question) => QuestionType.isDefault(question.question_type))
+                        .map((question) => this.getWrappedQuestion(question))
+                }
+            </div>
+        );
+        const addedQuestions = this.state.questions
+            .filter((question) => !QuestionType.isDefault(question.question_type))
+            .map((question) => (
+                <div key={question.id} className='question-element'>
+                    {this.getWrappedQuestion(question)}
+                </div>
+            ));
+        return [defaultQuestions, ...addedQuestions];
+    };
     toggleDeletingSavedQuestion = (event, question) => {
         let target = event.target;
         const updatedArray = this.state.deletedQuestions.map((q) => {return {...q}});
@@ -94,14 +102,13 @@ class FeedbackFormEditor extends Component {
         if (updatedArray.some((q) => q.id === deletedQuestion.id)) {
             let filteredArray = updatedArray.filter((q) => q.id !== deletedQuestion.id);
             this.setState({deletedQuestions: filteredArray});
-            target.innerText = 'Delete'
+            target.innerText = 'УДАЛИТЬ'
         } else {
             updatedArray.push(deletedQuestion);
             this.setState({deletedQuestions: updatedArray});
-            target.innerText = 'Cancel'
+            target.innerText = 'ОТМЕНА'
         }
     };
-
     addQuestion = (type) => {
         const orderNum = this.state.orderNum;
         const addedQuestions = this.state.addedQuestions.map((oldQuestion) => {
@@ -133,7 +140,6 @@ class FeedbackFormEditor extends Component {
         });
         this.setState({addedQuestions: addedQuestions, orderNum: orderNum + 1});
     };
-
     saveOrEditAddedQuestion = (newQuestion) => {
         const array = this.state.addedQuestions.map((oldQuestion) => {
             if (oldQuestion.id === newQuestion.id) return newQuestion;
@@ -141,7 +147,6 @@ class FeedbackFormEditor extends Component {
         });
         this.setState({addedQuestions: array})
     };
-
     deleteAdditionalQuestion = (id) => {
         const array = this.state.addedQuestions
             .filter((q) => q.id !== id)
@@ -225,8 +230,8 @@ class FeedbackFormEditor extends Component {
     }
 }
 
-FeedbackFormEditor.propTypes = {
+FormEditor.propTypes = {
     questions: PropTypes.arrayOf(PropTypeConstants.Question)
 };
 
-export default FeedbackFormEditor;
+export default FormEditor;
