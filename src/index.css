@@ -1,4 +1,4 @@
-body, div, h1, h2, h3 {
+body, div, ul, li, h1, h2, h3 {
     margin: 0;
     padding: 0;
 }
@@ -7,8 +7,24 @@ div, h1, textarea {
     color: #808080;
 }
 
-div, button, input, textarea {
+div, button, input, textarea, ul, li {
     overflow: hidden;
     box-sizing: border-box;
     outline: none;
+}
+
+.blue-button {
+    background-color: #159bd5;
+    border: none;
+    font-size: 1em;
+    color: white;
+    border-radius: 5px;
+    padding: 15px 30px;
+    margin: 10px;
+}
+
+.blue-button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px #159bd5;
+    background-color: #157FBA;
 }

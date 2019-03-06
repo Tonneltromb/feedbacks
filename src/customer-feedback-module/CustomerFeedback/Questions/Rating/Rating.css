@@ -1,15 +1,14 @@
-.StarComponent {
+.Rating {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.StarComponent-title {
+.Rating__question-text {
     font-size: 1.5em;
-    margin-bottom: 10px;
 }
 
-.StarComponent-rating-component-wrapper {
+.Rating__star-component {
     font-size: 3.5em;
 }

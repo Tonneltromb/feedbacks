@@ -3,9 +3,9 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import './Feedbacks.css';
-import * as constants from '../../common/constants';
+import * as constants from '../../../common-module/constants';
 import FeedbackList from "./FeedBackList/FeedbackList";
-import Spinner from "../../common/components/Spinner/Spinner";
+import Spinner from "../../../common-module/components/Spinner/Spinner";
 //todo: количество отзывов присылать отдельно(по-любому, будет пагинация)
 class Feedbacks extends Component {
     state = {

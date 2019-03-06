@@ -6,6 +6,27 @@
     justify-content: space-between;
 }
 
+.FeedbackFormEditor__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid grey;
+    box-shadow: 0 0 5px 1px grey;
+    border-radius: 10px;
+    margin: 10px;
+    padding-top: 20px;
+}
+
+.FeedbackFormEditor__form__questions {
+    overflow: auto;
+    max-height: 95%;
+}
+
+.FeedbackFormEditor__form__edit-buttons {
+    min-height: 5%;
+    display: flex;
+    justify-content: center;
+}
 
 .FeedbackFormEditor__bottom-buttons {
     width: 100%;
@@ -23,55 +44,45 @@
     border-radius: 5px;
 }
 
+
 .FeedbackFormEditor__bottom-buttons button:hover {
     box-shadow: 0 0 5px rgba(0,0,0,0.7);
     cursor: pointer;
 }
 
-.FeedbackFormEditor__form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin: 10px;
-    padding-top: 20px;
+.question-element {
+    width: 100%;
+    padding: 15px 55px 15px 35px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px 3px grey;
 }
 
-.Form__questions {
-    overflow: auto;
-    max-height: 95%;
-}
-
-.FeedbackFormEditor__edit-buttons {
-    min-height: 5%;
+.question-element .children-component {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-.edit-button {
-    background-color: #159bd5;
-    border: none;
-    font-size: 1em;
-    color: white;
+.children-component button {
+    margin: 5px;
+    padding: 10px;
+    height: 40px;
+    min-width: 60px;
     border-radius: 5px;
-    padding: 15px 30px;
-    margin: 10px;
 }
 
-.edit-button:hover {
-    cursor: pointer;
-    box-shadow: 0 0 10px #159bd5;
-    background-color: #157FBA;
+.question-text {
+    width: 70%;
+    text-align: left;
+    word-break: break-all;
+    white-space: pre-wrap;
 }
 
-.input-element {
-    width: 100%;
-    padding: 0 55px 0 35px;
-    margin-bottom: 40px;
+.question-element_question-title {
+    margin-bottom: 10px;
 }
 
-.default-marker {
+.default-question-marker {
     font-size: 24px;
     align-self: center;
     color: red;

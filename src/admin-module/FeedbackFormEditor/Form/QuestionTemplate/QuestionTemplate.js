@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-import * as AnswerType from "../../../../common/AnswerType";
+import PropTypes from 'prop-types';
+import * as AnswerType from "../../../../common-module/AnswerType";
 
 import './QuestionTemplate.css';
 import TextArea from "../TextArea/TextArea";
@@ -17,40 +18,48 @@ class QuestionTemplate extends Component {
         }
     }
 
-    saveQuestion = () => {
-        const savedQuestion = {...this.props.question};
-        savedQuestion.isSaved = true;
-        savedQuestion.question_text = this.state.questionText;
-        this.props.onSaveOrEditHandler(savedQuestion);
-    };
+    saveOrEditQuestion = () => {
+        const question = {...this.props.question};
+        if (question.isEditedNow) {
+            question.isEditedNow = false;
+            question.question_text = this.state.questionText;
+            this.props.onSaveQuestionHandler(question);
+        } else {
+            question.isEditedNow = true;
+            this.props.onEditQuestionHandler(question);
+        }
 
-    editQuestion = () => {
-        const savedQuestion = {...this.props.question};
-        savedQuestion.isSaved = false;
-        this.props.onSaveOrEditHandler(savedQuestion);
     };
 
     deleteQuestion = () => {
-        this.props.onDeleteHandler(this.props.question.id);
+        this.props.onDeleteQuestionHandler(this.props.question.id);
     };
 
     getManageButtons = () => {
+        const className = this.props.question.isEditedNow ? 'save-manage-button' : 'edit-manage-button' ;
+        const title = this.props.question.isEditedNow ? 'Подтвердить изменения' : 'Редактировать';
+        const innerText = this.props.question.isEditedNow ? 'СОХРАНИТЬ' : 'РЕДАКТИРОВАТЬ' ;
         return (
-            <div>
-                <button onClick={this.saveQuestion} title="Подтвердить изменения">&#10003;</button>
-                <button onClick={this.editQuestion} title="Редактировать">&#9998;</button>
-                <button onClick={this.deleteQuestion} title="Удалить">&#10007;</button>
-            </div>
+            <React.Fragment>
+                <button
+                    className={className}
+                    onClick={this.saveOrEditQuestion}
+                    title={title}>{innerText}</button>
+                <button
+                    className='delete-manage-button'
+                    onClick={this.deleteQuestion}
+                    title="Удалить">УДАЛИТЬ</button>
+            </React.Fragment>
         );
     };
 
     renderQuestion = (type) => {
         switch (type) {
             case AnswerType.TEXT : {
-                return <TextArea>{this.getManageButtons()}</TextArea>
+                return <TextArea questionText={this.state.questionText}>{this.getManageButtons()}</TextArea>
             }
             case AnswerType.STAR : {
-                return <RatingInput>{this.getManageButtons()}</RatingInput>
+                return <RatingInput questionText={this.state.questionText}>{this.getManageButtons()}</RatingInput>
             }
             default:
                 return null;
@@ -62,23 +71,33 @@ class QuestionTemplate extends Component {
     };
 
     renderQuestionText = () => {
-        return !this.props.isSaved
-            ? (<textarea
-                placeholder='Заголовок вопроса*'
-                value={this.state.questionText}
-                onChange={this.onQuestionTextInputChangeHandler} />)
-            : <h3>{this.props.question.question_text}</h3>;
+        return this.props.question.isEditedNow
+            ? (
+                <div className='question-text'>
+                <textarea
+                    placeholder='Заголовок вопроса*'
+                    value={this.state.questionText}
+                    onChange={this.onQuestionTextInputChangeHandler}/>
+                </div>
+            )
+            : null;
     };
 
     render() {
-        const question = this.renderQuestion(this.props.question.answer_type );
         return (
-            <div className="QuestionTemplate input-element">
-                <div className='QuestionTemplate__input'>{this.renderQuestionText()}</div>
-                {question}
+            <div className="QuestionTemplate question-element">
+                {this.renderQuestionText()}
+                {this.renderQuestion(this.props.question.answer_type)}
             </div>
         );
     }
 }
+
+QuestionTemplate.propTypes = {
+    question: PropTypes.object.isRequired,
+    onSaveQuestionHandler: PropTypes.func.isRequired,
+    onEditQuestionHandler: PropTypes.func.isRequired,
+    onDeleteQuestionHandler: PropTypes.func.isRequired,
+};
 
 export default QuestionTemplate;

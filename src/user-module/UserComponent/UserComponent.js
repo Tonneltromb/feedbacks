@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import Feedbacks from "./FeedBacks/Feedbacks";
-import CommonRating from "./FeedBacks/CommonRating/CommonRating";
+import Feedbacks from "./Feedbacks/Feedbacks";
+import CommonRating from "./Feedbacks/CommonRating/CommonRating";
 import './UserComponent.css'
 
 class UserComponent extends Component {

@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 
+import PropTypes from 'prop-types';
 import axios from "axios";
 
 import './FeedbackFormEditor.css';
-import * as constants from "../../common/constants";
-import Spinner from "../../common/components/Spinner/Spinner";
-import * as QuestionType from "../../common/QuestionType";
-import * as AnswerType from "../../common/AnswerType";
+import * as constants from "../../common-module/constants";
+import Spinner from "../../common-module/components/Spinner/Spinner";
+import * as QuestionType from "../../common-module/QuestionType";
+import * as AnswerType from "../../common-module/AnswerType";
+import * as PropTypeConstants from "../../common-module/PropTypeConstants";
 import RatingInput from "./Form/RatingInput/RatingInput";
 import TextArea from "./Form/TextArea/TextArea";
 import QuestionTemplate from "./Form/QuestionTemplate/QuestionTemplate";
@@ -15,13 +17,17 @@ class FeedbackFormEditor extends Component {
 
     state = {
         questions: [],
-        additionalQuestions: [],
+        addedQuestions: [],
         deletedQuestions: [],
         showSpinner: false,
         orderNum: 0
     };
 
     componentDidMount() {
+        this.loadQuestions();
+    }
+
+    loadQuestions = () => {
         axios.get(constants.GET_QUESTIONS_URL)
             .then((response) => {
                 const arr = response.data.slice();
@@ -31,46 +37,53 @@ class FeedbackFormEditor extends Component {
                 console.log('error', error);
                 this.setState({showSpinner: false})
             });
-    }
+    };
 
     renderSavedQuestions = () => {
-        // todo: добавить предварительную сортировку по полю order
         return this.state.questions
             .sort((first, second) => first.order_num - second.order_num)
             .map((question) => {
         let renderComponent = null;
             switch (question.question_type) {
-                case QuestionType.ADDITIONAL_STAR_RATING: {
+                case QuestionType.DEFAULT_STAR_RATING : {
                     renderComponent = (
-                        <RatingInput question={question}>
-                            <div>
-                                <button onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>Delete</button>
-                            </div>
+                        <RatingInput questionText={question.question_text}>
+                            <span className='default-question-marker'>По умолчанию</span>
                         </RatingInput>
                     );
                     break;
                 }
-                case QuestionType.DEFAULT_STAR_RATING : {
-                    renderComponent = <RatingInput question={question}><span className='default-marker'>По умолчанию</span></RatingInput>;
+                case QuestionType.DEFAULT_COMMENT : {
+                    renderComponent = (
+                        <TextArea>
+                            <span className='default-question-marker'>По умолчанию</span>
+                        </TextArea>
+                    );
                     break;
                 }
-                case QuestionType.DEFAULT_COMMENT : {
-                    renderComponent = <TextArea><span className='default-marker'>По умолчанию</span></TextArea>;
+                case QuestionType.ADDITIONAL_STAR_RATING: {
+                    renderComponent = (
+                        <RatingInput questionText={question.question_text}>
+                                <button
+                                    className='delete-manage-button'
+                                    onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>УДАЛИТЬ</button>
+                        </RatingInput>
+                    );
                     break;
                 }
                 case QuestionType.ADDITIONAL_TEXT_QUESTION : {
                     renderComponent = (
-                        <TextArea title={question.question_text}>
-                            <div>
-                                <button onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>Delete</button>
-                            </div>
+                        <TextArea questionText={question.question_text}>
+                                <button
+                                    className='delete-manage-button'
+                                    onClick={(event) => this.toggleDeletingSavedQuestion(event, question)}>УДАЛИТЬ</button>
                         </TextArea>
                     );
                     break;
                 }
                 default: break;
             }
-            return (<div key={question.id} className='input-element'>{renderComponent}</div>);
+            return (<div key={question.id} className='question-element'>{renderComponent}</div>);
         });
     };
 
@@ -91,7 +104,7 @@ class FeedbackFormEditor extends Component {
 
     addQuestion = (type) => {
         const orderNum = this.state.orderNum;
-        const addedQuestions = this.state.additionalQuestions.map((oldQuestion) => {
+        const addedQuestions = this.state.addedQuestions.map((oldQuestion) => {
             return {...oldQuestion}
         });
         let answerType = '';
@@ -113,49 +126,47 @@ class FeedbackFormEditor extends Component {
         addedQuestions.push({
             id: addedQuestions.length,
             question_text: '',
-            isSaved: false,
+            isEditedNow: true,
             answer_type: answerType,
             question_type: questionType,
             order_num: orderNum
         });
-        this.setState({additionalQuestions: addedQuestions, orderNum: orderNum + 1});
+        this.setState({addedQuestions: addedQuestions, orderNum: orderNum + 1});
     };
 
-    saveOrEditAdditionalQuestion = (newQuestion) => {
-        const array = this.state.additionalQuestions.map((oldQuestion) => {
+    saveOrEditAddedQuestion = (newQuestion) => {
+        const array = this.state.addedQuestions.map((oldQuestion) => {
             if (oldQuestion.id === newQuestion.id) return newQuestion;
             return {...oldQuestion}
         });
-        this.setState({additionalQuestions: array})
+        this.setState({addedQuestions: array})
     };
 
     deleteAdditionalQuestion = (id) => {
-        console.log('oldArr', this.state.additionalQuestions);
-        const array = this.state.additionalQuestions
+        const array = this.state.addedQuestions
             .filter((q) => q.id !== id)
             .map((oldQuestion, index) => {
                 return {...oldQuestion, id: index}
             });
-        console.log('newArr', array);
-        this.setState({additionalQuestions: array})
+        this.setState({addedQuestions: array})
     };
 
-    renderAdditionalQuestions = () => {
-        return this.state.additionalQuestions.map((question, index) => {
+    renderAddedQuestions = () => {
+        return this.state.addedQuestions.map((question, index) => {
             return (
                 <QuestionTemplate
                     key={index}
                     question={question}
-                    isSaved={question.isSaved}
-                    onSaveOrEditHandler={this.saveOrEditAdditionalQuestion}
-                    onDeleteHandler={this.deleteAdditionalQuestion}/>
+                    onSaveQuestionHandler={this.saveOrEditAddedQuestion}
+                    onEditQuestionHandler={this.saveOrEditAddedQuestion}
+                    onDeleteQuestionHandler={this.deleteAdditionalQuestion}/>
             );
         })
     };
 
-    saveFormTemplate = () => {
+    saveForm = () => {
         this.setState({showSpinner: true});
-        const sendQuestions = this.state.additionalQuestions.map((question) => {return {...question}});
+        const sendQuestions = this.state.addedQuestions.map((question) => {return {...question}});
         const deletedQuestions = this.state.deletedQuestions.map((question) => {return {...question}});
         let sendObject = {
             deletedQuestions: deletedQuestions,
@@ -163,7 +174,11 @@ class FeedbackFormEditor extends Component {
         };
         axios.post(constants.ADD_NEW_QUESTIONS_URL, sendObject)
             .then((response) => {
-                this.setState({showSpinner: false});
+                this.setState({
+                    addedQuestions: [],
+                    deletedQuestions: [],
+                    orderNum: 0});
+                this.loadQuestions();
             })
             .catch((error) => {
                 console.log('error', error);
@@ -173,7 +188,7 @@ class FeedbackFormEditor extends Component {
 
     clearState = () => {
       this.setState({
-          additionalQuestions: [],
+          addedQuestions: [],
           deletedQuestions: [],
           orderNum: 0
       })
@@ -186,28 +201,32 @@ class FeedbackFormEditor extends Component {
             <div className='FeedbackFormEditor'>
                 {additionalComponent}
                 <div className='FeedbackFormEditor__form'>
-                    <div className="Form__questions">
+                    <div className="FeedbackFormEditor__form__questions">
                         {this.renderSavedQuestions()}
-                        {this.renderAdditionalQuestions()}
+                        {this.renderAddedQuestions()}
                     </div>
-                    <div className="FeedbackFormEditor__edit-buttons">
+                    <div className="FeedbackFormEditor__form__edit-buttons">
                         <button
-                            className="edit-button"
+                            className="blue-button"
                             onClick={() => this.addQuestion(AnswerType.TEXT)}>Добавить текст
                         </button>
                         <button
-                            className='edit-button'
+                            className='blue-button'
                             onClick={() => this.addQuestion(AnswerType.STAR)}>Добавить шкалу
                         </button>
                     </div>
                 </div>
                 <div className='FeedbackFormEditor__bottom-buttons'>
-                    <button onClick={this.saveFormTemplate}>Сохранить</button>
+                    <button onClick={this.saveForm}>Сохранить</button>
                     <button onClick={this.clearState}>Отмена</button>
                 </div>
             </div>
         );
     }
 }
+
+FeedbackFormEditor.propTypes = {
+    questions: PropTypes.arrayOf(PropTypeConstants.Question)
+};
 
 export default FeedbackFormEditor;

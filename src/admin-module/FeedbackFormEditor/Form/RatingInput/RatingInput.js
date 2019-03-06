@@ -5,13 +5,13 @@ import StarRatingComponent from 'react-star-rating-component';
 import './RatingInput.css';
 
 const RatingInput = (props) => {
-    const title = props.question && props.question.question_text
-        ? <h3>{props.question.question_text}</h3>
+    const questionText = props.questionText
+        ? <h3>{props.questionText}</h3>
         : null;
     return (
         <div className="RatingInput">
-            <div className='TextArea__question'>
-                {title}
+            <div className='question-text'>
+                {questionText}
             </div>
             <div className='RatingInput__star-rating-component'>
                 <StarRatingComponent
@@ -20,7 +20,9 @@ const RatingInput = (props) => {
                     value={1}
                     editing={false}
                 />
-                {props.children}
+                <div className='children-component'>
+                    {props.children}
+                </div>
             </div>
         </div>
     );

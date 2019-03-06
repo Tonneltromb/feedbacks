@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import './TextAreaComponent.css';
+import './TextArea.css';
 
-class TextAreaComponent extends Component {
+class TextArea extends Component {
     state = {
         value: ''
     };
@@ -13,7 +13,7 @@ class TextAreaComponent extends Component {
     };
 
     getTitleElement = () => {
-        return this.props.title && this.props.showTitle
+        return this.props.title
             ? (
                 <div className="TextAreaComponent-title">
                     {this.props.title}:
@@ -27,24 +27,17 @@ class TextAreaComponent extends Component {
             <div
                 className='TextAreaComponent feedback-form-input'
                 data-field-id={this.props.questionId}
-                data-field-value={this.state.value}
-            >
-                {this.getTitleElement()}
+                data-field-value={this.state.value}>{this.getTitleElement()}
                 <textarea
                     placeholder="Оставьте свой комментарий"
-                    onChange={this.onTextAreaChangeHandler}
-                >
-            </textarea>
+                    onChange={this.onTextAreaChangeHandler}/>
             </div>
-
         );
-
     }
+}
+
+TextArea.propTypes = {
+    questionId: PropTypes.number.isRequired
 };
 
-TextAreaComponent.propTypes = {
-    questionId: PropTypes.number.isRequired,
-    showTitle: PropTypes.bool.isRequired
-};
-
-export default TextAreaComponent;
+export default TextArea;

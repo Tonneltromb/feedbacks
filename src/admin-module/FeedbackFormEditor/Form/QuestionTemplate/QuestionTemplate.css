@@ -1,20 +1,54 @@
 .QuestionTemplate {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 20px;
 }
 
-.QuestionTemplate__input {
+.QuestionTemplate__manage-buttons {
     display: flex;
-    align-items: self-start;
+    justify-content: center;
+    align-items: center;
 }
 
-.QuestionTemplate__input h3,
-.QuestionTemplate__input textarea {
-    width: 70%;
-    text-align: left;
-    word-break: break-all;
-    white-space: pre-wrap;
+.QuestionTemplate__manage-buttons button {
+    margin: 5px;
+    padding: 10px;
+    height: 40px;
+    min-width: 60px;
+    border-radius: 5px;
+}
+
+.edit-manage-button {
+    color: white;
+    font-weight: bold;
+    background-color: chocolate;
+    border: 1px solid chocolate;
+}
+
+.edit-manage-button:hover {
+    background-color: darkorange;
+    box-shadow: 0 0 5px 1px #454545;
+}
+.save-manage-button {
+    color: white;
+    font-weight: bold;
+    background-color: darkgreen;
+    border: 1px solid darkgreen;
+}
+
+.save-manage-button:hover {
+    background-color: forestgreen;
+    box-shadow: 0 0 5px 1px #454545;
+}
+
+.delete-manage-button {
+    color: white;
+    font-weight: bold;
+    background-color: firebrick;
+    border: 1px solid firebrick;
+}
+
+.delete-manage-button:hover {
+    background-color: crimson;
+    box-shadow: 0 0 5px 1px #454545;
 }

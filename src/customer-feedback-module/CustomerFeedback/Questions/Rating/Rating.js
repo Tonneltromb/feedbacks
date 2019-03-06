@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import StarRatingComponent from 'react-star-rating-component';
 
-import './StarComponent.css';
+import './Rating.css';
 
-class StarComponent extends Component {
+class Rating extends Component {
 
     state = {
         value: 0,
@@ -15,7 +15,7 @@ class StarComponent extends Component {
     getTitleElement = () => {
         return this.props.title
             ? (
-                <div className="StarComponent-title">
+                <div className="Rating__question-text">
                     {this.props.title}:
                 </div>
             )
@@ -25,12 +25,12 @@ class StarComponent extends Component {
     render() {
         return (
             <div
-                className="StarComponent feedback-form-input"
+                className="Rating feedback-form-input"
                 data-field-id={this.props.questionId}
                 data-field-value={this.state.value}
             >
                 {this.getTitleElement()}
-                <div className="StarComponent-rating-component-wrapper">
+                <div className="Rating__star-component">
                     <StarRatingComponent
                         name={`star-component-${this.props.questionId}`}
                         starCount={5}
@@ -53,9 +53,9 @@ class StarComponent extends Component {
     }
 }
 
-StarComponent.propTypes = {
+Rating.propTypes = {
     questionId: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired
 };
 
-export default StarComponent;
+export default Rating;

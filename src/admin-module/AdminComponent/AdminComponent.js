@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 
-import {Route, Link} from "react-router-dom";
+import {Route} from "react-router-dom";
 
 import './AdminComponent.css';
 import FeedbackFormEditor from "../FeedbackFormEditor/FeedbackFormEditor";
+import FeedbackList from "../FeedbackList/FeedbackList";
 
 class AdminComponent extends Component {
     render() {
@@ -11,16 +12,19 @@ class AdminComponent extends Component {
             <div className='AdminComponent'>
                 <div className='AdminComponent-navigation'>
                     <h3>Панель администратора</h3>
-                    <ul>
-                        <li>
-                            <Link to={`${this.props.match.url}/editFeedbackForm`}>
-                                Редактирование опроса
-                            </Link>
-                        </li>
-                    </ul>
+                    <div
+                        className='nav-button'
+                        onClick={() => this.props.history.push(`${this.props.match.url}/showFeedbacks`)}>Отзывы
+                    </div>
+                    <div
+                        className='nav-button'
+                        onClick={() => this.props.history.push(`${this.props.match.url}/editFeedbackForm`)}>
+                        Редактирование опроса
+                    </div>
                 </div>
                 <div className='AdminComponent-content'>
                     <Route path={`${this.props.match.url}/editFeedbackForm`} component={FeedbackFormEditor}/>
+                    <Route path={`${this.props.match.url}/showFeedbacks`} component={FeedbackList}/>
                 </div>
             </div>
         );
