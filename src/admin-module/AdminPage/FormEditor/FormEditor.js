@@ -128,7 +128,7 @@ class FormEditor extends Component {
                 break;
             }
             default:
-                return;
+                break;
         }
         addedQuestions.push({
             id: addedQuestions.length,
@@ -155,12 +155,11 @@ class FormEditor extends Component {
             });
         this.setState({addedQuestions: array})
     };
-
     renderAddedQuestions = () => {
         return this.state.addedQuestions.map((question, index) => {
             return (
                 <QuestionTemplate
-                    key={index}
+                    key={question.order_num}
                     question={question}
                     onSaveQuestionHandler={this.saveOrEditAddedQuestion}
                     onEditQuestionHandler={this.saveOrEditAddedQuestion}
@@ -168,7 +167,6 @@ class FormEditor extends Component {
             );
         })
     };
-
     saveForm = () => {
         this.setState({showSpinner: true});
         const sendQuestions = this.state.addedQuestions.map((question) => {return {...question}});
@@ -190,7 +188,6 @@ class FormEditor extends Component {
                 this.setState({showSpinner: false})
             });
     };
-
     clearState = () => {
       this.setState({
           addedQuestions: [],
@@ -198,7 +195,6 @@ class FormEditor extends Component {
           orderNum: 0
       })
     };
-
     render() {
         let additionalComponent = null;
         if (this.state.showSpinner) additionalComponent = <Spinner/>;
