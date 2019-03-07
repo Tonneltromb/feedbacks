@@ -3,14 +3,14 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import './Feedbacks.css';
-import * as constants from '../../../common-module/constants/constants';
-import FeedbackList from "./FeedBackList/FeedbackList";
+import * as constants from '../../../common-module/constants/URLConstants';
+import FeedbackList from "../../../common-module/components/FeedbacksList/FeedbacksList";
 import Spinner from "../../../common-module/components/Spinner/Spinner";
 //todo: количество отзывов присылать отдельно(по-любому, будет пагинация)
 class Feedbacks extends Component {
     state = {
         feedbacks: [],
-        loading: false
+        showSpinner: false
     };
 
     componentDidMount() {
@@ -28,14 +28,13 @@ class Feedbacks extends Component {
     }
 
     render() {
-        let additionalComponent = null;
-        if (this.state.loading) additionalComponent = <Spinner/>;
+        const additionalComponent = this.state.showSpinner ? <Spinner/> : null;
         return (
             <React.Fragment>
                 {additionalComponent}
                 <div className='Feedbacks'>
                     <h2>Полученные отзывы: {this.state.feedbacks.length}</h2>
-                    <FeedbackList feedbacks={this.state.feedbacks}/>
+                    <FeedbackList feedbacks={this.state.feedbacks} listStyle={{padding: '0 20px'}}/>
                 </div>
             </React.Fragment>
         );

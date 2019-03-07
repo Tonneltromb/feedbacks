@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import './CustomerFeedback.css';
-import * as constants from '../../common-module/constants/constants';
+import * as constants from '../../common-module/constants/URLConstants';
 import * as QuestionType from '../../common-module/constants/QuestionType';
 import Spinner from "../../common-module/components/Spinner/Spinner";
 import StarRatingWrapper from './StarRatingWrapper/StarRatingWrapper';

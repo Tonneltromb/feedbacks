@@ -4,7 +4,7 @@ import axios from 'axios';
 import StarRatingComponent from 'react-star-rating-component';
 
 import './CommonRating.css';
-import * as constants from "../../../../common-module/constants/constants";
+import * as constants from "../../../../common-module/constants/URLConstants";
 
 class CommonRating extends Component {
     state = {

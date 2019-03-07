@@ -2,24 +2,25 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import './FeedbackList.css';
-import Feedback from "../Feedback/Feedback";
+import './FeedbacksList.css';
+import Feedback from "./Feedback/Feedback";
 
-const FeedbackList = (props) => {
+const FeedbacksList = (props) => {
     let feedbacks = <div>Отзывы не найдены</div>;
     if (props.feedbacks && props.feedbacks.length > 0) {
         feedbacks = props.feedbacks
             .map(feedback => <Feedback key={feedback.id} feedback={feedback}/>);
     }
     return (
-        <div className='FeedbackList'>
+        <div className='FeedbacksList' style={props.listStyle}>
             {feedbacks}
         </div>
     );
 };
 
-FeedbackList.propTypes = {
-    feedbacks: PropTypes.array.isRequired
+FeedbacksList.propTypes = {
+    feedbacks: PropTypes.array.isRequired,
+    listStyle: PropTypes.object
 };
 
-export default FeedbackList;
+export default FeedbacksList;

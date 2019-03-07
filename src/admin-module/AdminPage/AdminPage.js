@@ -4,7 +4,7 @@ import {Route} from "react-router-dom";
 
 import './AdminPage.css';
 import FormEditor from "./FormEditor/FormEditor";
-import FeedbackList from "./FeedbackList/FeedbackList";
+import Feedbacks from "./Feedbacks/Feedbacks";
 
 class AdminPage extends Component {
     render() {
@@ -14,7 +14,8 @@ class AdminPage extends Component {
                     <h3>Панель администратора</h3>
                     <div
                         className='nav-button'
-                        onClick={() => this.props.history.push(`${this.props.match.url}/showFeedbacks`)}>Отзывы
+                        onClick={() => this.props.history.push(`${this.props.match.url}/showFeedbacks`)}>
+                        Отзывы
                     </div>
                     <div
                         className='nav-button'
@@ -24,7 +25,7 @@ class AdminPage extends Component {
                 </div>
                 <div className='AdminComponent-content'>
                     <Route path={`${this.props.match.url}/editFeedbackForm`} component={FormEditor}/>
-                    <Route path={`${this.props.match.url}/showFeedbacks`} component={FeedbackList}/>
+                    <Route path={`${this.props.match.url}/showFeedbacks`} component={Feedbacks}/>
                 </div>
             </div>
         );

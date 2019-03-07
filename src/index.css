@@ -51,6 +51,7 @@ textarea:-ms-input-placeholder {
 
 .question-text {
     width: 100%;
+    color: black;
     text-align: left;
     word-break: break-all;
     white-space: pre-wrap;

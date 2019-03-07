@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 
 import './FormEditor.css';
-import * as constants from "../../../common-module/constants/constants";
+import * as constants from "../../../common-module/constants/URLConstants";
 import * as QuestionType from "../../../common-module/constants/QuestionType";
 import * as AnswerType from "../../../common-module/constants/AnswerType";
 import * as PropTypeConstants from "../../../common-module/constants/PropTypeConstants";

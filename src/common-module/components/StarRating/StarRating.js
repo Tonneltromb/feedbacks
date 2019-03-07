@@ -36,7 +36,7 @@ StarRating.propTypes = {
     starSize: PropTypes.string.isRequired,
     questionTextSize: PropTypes.string,
     id: PropTypes.number.isRequired,
-    question_text: PropTypes.string.isRequired,
+    question_text: PropTypes.string,
     onStarClickHandler: PropTypes.func,
     onStarHoverHandler: PropTypes.func,
     onStarHoverOutHandler: PropTypes.func
