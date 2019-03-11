@@ -2,8 +2,8 @@
     width: 100%;
     height: 100%;
     min-height: fit-content;
-    border: 1px solid black;
-    border-radius: 10px;
+    border: 1px solid grey;
+    box-shadow: 0 0 4px 1px grey;
     padding: 0 15px;
     margin: 10px 0;
     display: flex;
@@ -25,33 +25,8 @@
     justify-content: space-between;
 }
 
-/*.Feedback__default-comment {*/
-    /*width: 100%;*/
-    /*margin-bottom: 20px;*/
-/*}*/
-
 .Feedback__create-time {
     min-width: 100px;
     display: flex;
     align-items: center;
 }
-
-/*.Feedback__additional-rating {*/
-    /*width: 100%;*/
-    /*text-align: left;*/
-/*}*/
-
-/*.Feedback__additional-rating .StarAnswer {*/
-    /*font-size: 2em;*/
-/*}*/
-
-/*.Feedback__additional-text-question {*/
-    /*width: 100%;*/
-    /*margin-bottom: 20px;*/
-    /*text-align: left;*/
-/*}*/
-
-/*.Feedback__question {*/
-    /*font-size: 1.3em;*/
-    /*color: black;*/
-/*}*/
