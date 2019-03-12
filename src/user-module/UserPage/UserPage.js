@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 
 import Feedbacks from "./Feedbacks/Feedbacks";
 import CommonRating from "./Feedbacks/CommonRating/CommonRating";
-import './UserComponent.css'
+import './UserPage.css'
 
-class UserComponent extends Component {
+class UserPage extends Component {
     render() {
         return (
             <div className="UserComponent">
@@ -19,4 +19,4 @@ class UserComponent extends Component {
     }
 }
 
-export default UserComponent;
+export default UserPage;
